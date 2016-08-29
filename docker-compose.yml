@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+    front:
+        #image: ekyna/nginx
+        build: ./docker/front
+#        network_mode: "bridge"
+        ports:
+            - "80:80"
+        links:
+            - "engine:engine"
+        volumes:
+            - ".:/home/docker:ro"
+            - "./docker/front/default.conf:/etc/nginx/conf.d/default.conf:ro"
+
+    engine:
+    #    image: ekyna/php7
+        build: ./docker/engine
+#        network_mode: "bridge"
+#        ports:
+#            - "9001:9001"
+        volumes:
+            - ".:/home/docker:rw"
+            - "./docker/engine/php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
+        links:
+            - "db:db"
+        working_dir: "/home/docker"
+        environment:
+            PHP_IDE_CONFIG: "serverName=symfony.dev"
+
+    db:
+        image: mysql:5.7
+#        network_mode: "bridge"
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "your_root_password"
+            MYSQL_USER: "your_user"
+            MYSQL_PASSWORD: "your_user_password"
+            MYSQL_DATABAS: "your_database_name"
