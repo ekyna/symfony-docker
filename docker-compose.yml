@@ -4,7 +4,6 @@ services:
     front:
         #image: ekyna/nginx
         build: ./docker/front
-#        network_mode: "bridge"
         ports:
             - "80:80"
         links:
@@ -16,12 +15,11 @@ services:
     engine:
     #    image: ekyna/php7
         build: ./docker/engine
-#        network_mode: "bridge"
-#        ports:
-#            - "9001:9001"
         volumes:
             - ".:/home/docker:rw"
             - "./docker/engine/php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
+        ports:
+            - "9080:22"
         links:
             - "db:db"
         working_dir: "/home/docker"
@@ -30,7 +28,6 @@ services:
 
     db:
         image: mysql:5.7
-#        network_mode: "bridge"
         ports:
             - "3306:3306"
         environment:

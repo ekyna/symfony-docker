@@ -13,8 +13,8 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        //$ipAddress = '';
+        //$ipAddress = $_SERVER['REMOTE_ADDR'];
+        $ipAddress = '';
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
